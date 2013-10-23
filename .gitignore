@@ -2,4 +2,6 @@
 *.*~
 *.*swp
 
-template/**/*.js
+node_modules
+
+template/*.js
