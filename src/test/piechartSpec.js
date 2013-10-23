@@ -23,6 +23,7 @@ describe('piechart', function() {
       });
 
       describe('addSlice', function() {
+         
          it('adds a slice to the collection', function() {
             var slice1, slice2;
 
@@ -31,6 +32,46 @@ describe('piechart', function() {
             expect(ctrl.slices.length).toBe(2);
             expect(ctrl.slices[0]).toBe(slice1);
             expect(ctrl.slices[1]).toBe(slice2);
+         });
+
+         it('resets angles as slices are added to the collection', function() {
+            var slice1, slice2, slice3;
+
+            ctrl.addSlice(slice1 = { value: 50 });
+            expect(slice1.angle).toBe(360);
+            ctrl.addSlice(slice2 = { value: 50 });
+            expect(slice1.angle).toBe(180);
+            expect(slice2.angle).toBe(180);
+            ctrl.addSlice(slice3 = { value: 100 });
+            expect(slice1.angle).toBe(90);
+            expect(slice2.angle).toBe(90);
+            expect(slice3.angle).toBe(180);
+         });
+      });
+
+      describe('removeSlice', function() {
+
+         it('removes a slice from the collection', function() {
+            var slice1, slice2;
+
+            ctrl.addSlice(slice1 = $scope.$new());
+            ctrl.addSlice(slice2 = $scope.$new());
+            ctrl.removeSlice(slice1);
+            expect(ctrl.slices.length).toBe(1);
+            expect(ctrl.slices[0]).toBe(slice2);
+         });
+
+         it('resets angles as slices are removed from the collection', function() {
+            var slice1, slice2, slice3;
+
+            ctrl.addSlice(slice1 = { value: 50 });
+            ctrl.addSlice(slice2 = { value: 50 });
+            ctrl.addSlice(slice3 = { value: 100 });
+            
+            ctrl.removeSlice(slice2);
+            expect(slice1.angle).toBe(120);
+            expect(slice3.angle).toBe(240);
+
          });
       });
    });
