@@ -1,9 +1,13 @@
 angular.module('piechart', [])
 
-   .controller('PiechartController', ['$scope', function($scope) {
+   .constant('piechartConfig', {
+      radius: 10
+   })
+
+   .controller('PiechartController', ['$scope', '$attrs', 'piechartConfig', function($scope, $attrs, piechartConfig) {
       var slices,
-          totalValue = 0,
-          getArc = function(radius, startAngle, endAngle) {
+          radius,
+          getArc = function(startAngle, endAngle) {
              function convertToRadians(angle) {
                 return angle * (Math.PI / 180);
              };
@@ -25,23 +29,28 @@ angular.module('piechart', [])
 
       this.scope = $scope;
 
+      this.attrs = $attrs;
+
       this.addSlice = function(sliceScope) {
-         totalValue += sliceScope.value;
          slices.push(sliceScope);
       };
 
       this.removeSlice = function(sliceScope) {
-         totalValue -= sliceScope.value;
          slices.splice(slices.indexOf(sliceScope), 1);
       };
 
-      this.setArcs = function(radius) {
-         var prevStartAngle = 0;
+      this.setArcs = function() {
+         var prevStartAngle = 0,
+             totalValue = 0;
+
+         radius = angular.isDefined($attrs.radius) ? $scope.$eval($attrs.radius) : piechartConfig.radius;
 
          angular.forEach(slices, function(slice) {
-            slice.radius = radius; //TODO: tidy up scope inheritence for radius
+            totalValue += slice.value;
+         });
+
+         angular.forEach(slices, function(slice) {
             slice.arc = getArc(
-               radius,
                prevStartAngle,
                prevStartAngle = prevStartAngle + (360 / (totalValue / slice.value))
             );
@@ -55,15 +64,7 @@ angular.module('piechart', [])
          controller: 'PiechartController',
          template: '<svg ng-transclude></svg>',
          transclude: true,
-         replace: true,
-         scope: {
-            radius: '='
-         },
-         link: function(scope, element, attrs, piechartCtrl) {
-            scope.$watch(piechartCtrl.slices, function() {
-               piechartCtrl.setArcs(scope.radius);
-            });
-         }
+         replace: true
       };
    })
 
@@ -78,10 +79,19 @@ angular.module('piechart', [])
             '</path>',
          replace: true,
          scope: {
-            value: '='
+            value: '@'
          },
          link: function(scope, element, attrs, piechartCtrl) {
             piechartCtrl.addSlice(scope);
+
+            piechartCtrl.attrs.$observe('radius', function(value) {
+               scope['radius'] = value;
+            });
+
+            attrs.$observe('value', function(value) {
+               scope['value'] = parseInt(value, 10);
+               piechartCtrl.setArcs();
+            });
          }
       };
    });
