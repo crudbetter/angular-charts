@@ -68,7 +68,7 @@ angular.module('piechart', [])
       };
    })
 
-   .directive('piechartSlice', function() {
+   .directive('piechartSlice', ['piechartConfig', function(piechartConfig) {
       return {
          restrict: 'EA',
          require: '^piechart',
@@ -84,6 +84,10 @@ angular.module('piechart', [])
          link: function(scope, element, attrs, piechartCtrl) {
             piechartCtrl.addSlice(scope);
 
+            scope.radius = angular.isDefined(piechartCtrl.attrs.radius) ?
+               piechartCtrl.scope.$eval(piechartCtrl.attrs.radius) :
+               piechartConfig.radius;
+
             piechartCtrl.attrs.$observe('radius', function(value) {
                scope['radius'] = value;
             });
@@ -94,5 +98,5 @@ angular.module('piechart', [])
             });
          }
       };
-   });
+   }]);
       
