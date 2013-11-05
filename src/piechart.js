@@ -84,12 +84,8 @@ angular.module('piechart', [])
          link: function(scope, element, attrs, piechartCtrl) {
             piechartCtrl.addSlice(scope);
 
-            scope.radius = angular.isDefined(piechartCtrl.attrs.radius) ?
-               piechartCtrl.scope.$eval(piechartCtrl.attrs.radius) :
-               piechartConfig.radius;
-
             piechartCtrl.attrs.$observe('radius', function(value) {
-               scope['radius'] = value;
+               scope['radius'] = value || piechartConfig.radius;
             });
 
             attrs.$observe('value', function(value) {
