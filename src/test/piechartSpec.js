@@ -164,22 +164,10 @@ describe('piechart', function() {
       });
 
       describe('with dynamic slices', function() {
-         var model;
-
-         beforeEach(function() {
-            var html = 
-               "<piechart radius='10'>" +
-                  "<piechart-slice ng-repeat='slice in slices' value='{{slice.value}}'></piechart-slice>" +
-               "</piechart-slice>";
-            
-            element = angular.element(html);
-            model = [
+         var model = [
                { value: '50' },
                { value: '50' }
-            ];
-            $compile(element)($scope);
-            $scope.$digest();
-         });
+             ];
 
          it('should create no paths initially', function() {
             var html = 
