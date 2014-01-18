@@ -102,7 +102,7 @@ describe('piechart', function() {
       var $compile, element, paths,
           originalConfigRadius,
           findPath = function(index) {
-             return element.find('path').eq(index);
+             return element[0].getElementsByTagNameNS('http://www.w3.org/2000/svg', 'path')[index];
           };
 
       beforeEach(function() {
