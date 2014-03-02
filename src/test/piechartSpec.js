@@ -1,13 +1,15 @@
 describe('piechart', function() { 
    var $scope;
+   var ctrl;
 
    beforeEach(function() {
       module('piechart');
       module('template/piechart.html');
       module('template/piechart-slice.html');
 
-      inject(function($rootScope) {
+      inject(function($rootScope, $controller) {
          $scope = $rootScope;
+         ctrl = $controller('PiechartController', { $scope: $scope, $attrs: {} });
       });
    });
 
@@ -103,7 +105,10 @@ describe('piechart', function() {
           originalConfigRadius,
           findPath = function(index) {
              return element[0].getElementsByTagNameNS('http://www.w3.org/2000/svg', 'path')[index];
-          };
+          },
+         findPaths = function(index) {
+            return element[0].getElementsByTagNameNS('http://www.w3.org/2000/svg', 'path');
+         };
 
       beforeEach(function() {
          inject(function( _$compile_, piechartConfig) {
@@ -130,36 +135,38 @@ describe('piechart', function() {
 
          it('should create paths with d attribute, using piechart radius attribute if defined', function() {
             var html = 
+               "<div>" +
                "<piechart radius='10'>" +
                   "<piechart-slice value='50'></piechart-slice>" +
                   "<piechart-slice value='50'></piechart-slice>" +
-               "</piechart-slice>";
+               "</piechart-slice>" +
+               "</div>";
             
             element = angular.element(html);
             $compile(element)($scope);
             $scope.$digest();
 
-            paths = element.find('path');
-            expect(paths.length).toEqual(2);
-            expect(findPath(0).attr('d')).toEqual('M10,0A10,10,0,1,1,-10,0Z');
-            expect(findPath(1).attr('d')).toEqual('M-10,0A10,10,0,1,1,10,0Z');
+            expect(findPaths().length).toEqual(2);
+            expect(findPath(0).getAttribute('d')).toEqual('M10,0A10,10,0,1,1,-10,0Z');
+            expect(findPath(1).getAttribute('d')).toEqual('M-10,0A10,10,0,1,1,10,0Z');
          });
 
          it('should create paths with d attrribute, using piechartConfig if piechart radius attribute not defined', function() {
             var html = 
+               "<div>" +
                "<piechart>" +
                   "<piechart-slice value='50'></piechart-slice>" +
                   "<piechart-slice value='50'></piechart-slice>" +
-               "</piechart-slice>";
+               "</piechart>" +
+               "</div>";
             
             element = angular.element(html);
             $compile(element)($scope);
             $scope.$digest();
 
-            paths = element.find('path');
-            expect(paths.length).toEqual(2);
-            expect(findPath(0).attr('d')).toEqual('M100,0A100,100,0,1,1,-100,0Z');
-            expect(findPath(1).attr('d')).toEqual('M-100,0A100,100,0,1,1,100,0Z');
+            expect(findPaths().length).toEqual(2);
+            expect(findPath(0).getAttribute('d')).toEqual('M100,0A100,100,0,1,1,-100,0Z');
+            expect(findPath(1).getAttribute('d')).toEqual('M-100,0A100,100,0,1,1,100,0Z');
          });
       });
 
@@ -171,52 +178,53 @@ describe('piechart', function() {
 
          it('should create no paths initially', function() {
             var html = 
+            "<div>" +
                "<piechart radius='10'>" +
                   "<piechart-slice ng-repeat='slice in slices' value='{{slice.value}}'></piechart-slice>" +
-               "</piechart-slice>";
+               "</piechart>" +
+            "</div>";
             
             element = angular.element(html);
             $compile(element)($scope);
             $scope.$digest();
 
-            paths = element.find('path');
-            expect(paths.length).toEqual(0);
+            expect(findPaths().length).toEqual(0);
          });
 
          it('should create paths with d attribute, using piechart radius attribute if defined', function() {
             var html = 
+            "<div>" +
                "<piechart radius='10'>" +
                   "<piechart-slice ng-repeat='slice in slices' value='{{slice.value}}'></piechart-slice>" +
-               "</piechart-slice>";
+               "</piechart>" +
+            "</div>";
 
             element = angular.element(html);
-            $compile(element)($scope);
+            $compile(element)($scope);//, {}, {'PiechartController':ctrl});
             $scope.slices = model;
             $scope.$digest();
 
-            paths = element.find('path');
-
-            expect(paths.length).toEqual(2);
-            expect(findPath(0).attr('d')).toEqual('M10,0A10,10,0,1,1,-10,0Z');
-            expect(findPath(1).attr('d')).toEqual('M-10,0A10,10,0,1,1,10,0Z');
+            expect(findPaths().length).toEqual(2);
+            expect(findPath(0).getAttribute('d')).toEqual('M10,0A10,10,0,1,1,-10,0Z');
+            expect(findPath(1).getAttribute('d')).toEqual('M-10,0A10,10,0,1,1,10,0Z');
          });
 
          it('should create paths with d attribute, using piechartConfig if piechart radius attribute not defined', function() {
             var html = 
+            "<div>" +
                "<piechart>" +
                   "<piechart-slice ng-repeat='slice in slices' value='{{slice.value}}'></piechart-slice>" +
-               "</piechart-slice>";
+               "</piechart>" +
+            "</div>";
 
             element = angular.element(html);
             $compile(element)($scope);
             $scope.slices = model;
             $scope.$digest();
 
-            paths = element.find('path');
-
-            expect(paths.length).toEqual(2);
-            expect(findPath(0).attr('d')).toEqual('M100,0A100,100,0,1,1,-100,0Z');
-            expect(findPath(1).attr('d')).toEqual('M-100,0A100,100,0,1,1,100,0Z');
+            expect(findPaths().length).toEqual(2);
+            expect(findPath(0).getAttribute('d')).toEqual('M100,0A100,100,0,1,1,-100,0Z');
+            expect(findPath(1).getAttribute('d')).toEqual('M-100,0A100,100,0,1,1,100,0Z');
          });
       });
    });

@@ -4,6 +4,18 @@ angular.module('piechart', [])
       radius: 10
    })
 
+   .value('createSVGNode', function(name, element, settings) {
+      var namespace = 'http://www.w3.org/2000/svg';
+      var node = document.createElementNS(namespace, name);
+      for (var attribute in settings) {
+         var value = settings[attribute];
+         if (value !== null && !attribute.match(/\$/) && (typeof value !== 'string' || value !== '')) {
+            node.setAttribute(attribute, value);
+         }
+      }
+      return node;
+   })
+
    .controller('PiechartController', ['$scope', '$attrs', 'piechartConfig', function($scope, $attrs, piechartConfig) {
       var slices,
           radius,
@@ -50,6 +62,7 @@ angular.module('piechart', [])
          });
 
          angular.forEach(slices, function(slice) {
+            slice.totalValue = totalValue;
             slice.arc = getArc(
                prevStartAngle,
                prevStartAngle = prevStartAngle + (360 / (totalValue / slice.value))
@@ -58,30 +71,33 @@ angular.module('piechart', [])
       };
    }])
 
-   .directive('piechart', function() {
+   .directive('piechart', ['createSVGNode', function(createSVGNode) {
       return {
          restrict: 'EA',
          controller: 'PiechartController',
-         template: '<svg ng-transclude></svg>',
-         transclude: true,
-         replace: true
-      };
-   })
+         controllerAs: 'ctrl',
+         link:  function(scope, element, attrs) {
+            var svg = createSVGNode('svg', element, attrs);
 
-   .directive('piechartSlice', ['piechartConfig', function(piechartConfig) {
+            angular.element(svg).append(element[0].childNodes);
+            element.replaceWith(svg);
+         }
+      };
+   }])
+
+   .directive('piechartSlice', ['piechartConfig', 'createSVGNode', '$compile', function(piechartConfig, createSVGNode, $compile) {
       return {
          restrict: 'EA',
-         require: '^piechart',
-         template: 
-            '<path ' +
-               'd="M{{arc.start.x}},{{arc.start.y}}A{{radius}},{{radius}},0,1,1,{{arc.end.x}},{{arc.end.y}}Z" ' +
-               'transform="rotate(90,0,0)">' + 
-            '</path>',
-         replace: true,
-         scope: {
-            value: '@'
-         },
-         link: function(scope, element, attrs, piechartCtrl) {
+         require: '?^piechart',
+         scope: true,
+         link: function(scope, element, attrs, ctrl) {
+            var piechartCtrl = ctrl || scope.$parent.ctrl;
+            var d = 'M{{arc.start.x}},{{arc.start.y}}A{{radius}},{{radius}},0,1,1,{{arc.end.x}},{{arc.end.y}}Z';
+            var path = createSVGNode('path', element, attrs);
+            
+            angular.element(path).attr('ng-attr-d', d);
+            element.replaceWith(path);
+
             piechartCtrl.addSlice(scope);
 
             piechartCtrl.attrs.$observe('radius', function(value) {
@@ -91,6 +107,7 @@ angular.module('piechart', [])
             attrs.$observe('value', function(value) {
                scope['value'] = parseInt(value, 10);
                piechartCtrl.setArcs();
+               $compile(path)(scope);
             });
          }
       };
