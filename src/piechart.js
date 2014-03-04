@@ -62,6 +62,7 @@ angular.module('piechart', [])
          });
 
          angular.forEach(slices, function(slice) {
+            slice.radius = radius;
             slice.totalValue = totalValue;
             slice.arc = getArc(
                prevStartAngle,
@@ -89,7 +90,9 @@ angular.module('piechart', [])
       return {
          restrict: 'EA',
          require: '?^piechart',
-         scope: true,
+         scope: {
+            value: '@'
+         },
          link: function(scope, element, attrs, ctrl) {
             var piechartCtrl = ctrl || scope.$parent.ctrl;
             var d = 'M{{arc.start.x}},{{arc.start.y}}A{{radius}},{{radius}},0,1,1,{{arc.end.x}},{{arc.end.y}}Z';
@@ -99,10 +102,6 @@ angular.module('piechart', [])
             element.replaceWith(path);
 
             piechartCtrl.addSlice(scope);
-
-            piechartCtrl.attrs.$observe('radius', function(value) {
-               scope['radius'] = value || piechartConfig.radius;
-            });
 
             attrs.$observe('value', function(value) {
                scope['value'] = parseInt(value, 10);

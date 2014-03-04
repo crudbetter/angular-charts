@@ -200,7 +200,7 @@ describe('piechart', function() {
             "</div>";
 
             element = angular.element(html);
-            $compile(element)($scope);//, {}, {'PiechartController':ctrl});
+            $compile(element)($scope);
             $scope.slices = model;
             $scope.$digest();
 
