@@ -1,6 +1,12 @@
 {
+  "author": "https://github.com/mjgodfrey83",
   "name": "angular-piechart",
   "version": "0.0.1",
+  "homepage": "http://mjgodfrey83.github.io/angular-piechart/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mjgodfrey83/angular-piechart.git"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-karma": "~0.6.2",
@@ -13,6 +19,9 @@
     "karma-coffee-preprocessor": "~0.1.0",
     "karma-phantomjs-launcher": "~0.1.0",
     "karma": "~0.10.2",
-    "grunt-html2js": "~0.1.8"
+    "grunt-html2js": "~0.1.8",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-clean": "~0.5.0"
   }
 }
