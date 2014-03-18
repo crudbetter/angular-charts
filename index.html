@@ -1,1 +1,37 @@
-angular-piechart GitHub Page
+<!DOCTYPE html>
+<html lang="en" ng-app="angularPiechartDemoApp" id="top">
+   <head>
+      <meta charset="utf-8">
+
+      <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
+      <script src="angular-piechart-0.0.1.js"></script>
+      <script src="assets/app.js"></script>
+
+      <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"/>
+   </head>
+   <body>
+      <header class="navbar navbar-default navbar-fixed-top">
+         <nav>
+            <ul class="nav navbar-nav">
+               <a href="#" role="button" class="navbar-brand">
+                  AngularJS Piechart
+               </a>
+            </ul>
+         </nav>
+      </header>
+
+      <div class="container">
+         <div class="row">
+            <div class="col-md-12">
+               <section>
+                  <piechart radius="100">
+                     <piechart-slice value="45"></piechart-slice>
+                     <piechart-slice value="55"></piechart-slice>
+                  </piechart>
+               </section>
+            </div>
+         </div>
+      </div>
+
+   </body>
+</html>
