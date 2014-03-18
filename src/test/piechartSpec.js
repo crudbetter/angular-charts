@@ -4,8 +4,6 @@ describe('piechart', function() {
 
    beforeEach(function() {
       module('piechart');
-      module('template/piechart.html');
-      module('template/piechart-slice.html');
 
       inject(function($rootScope, $controller) {
          $scope = $rootScope;
