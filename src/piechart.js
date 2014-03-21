@@ -63,11 +63,11 @@ angular.module('piechart', [])
 
          angular.forEach(slices, function(slice) {
             slice.radius = radius;
-            slice.totalValue = totalValue;
             slice.arc = getArc(
                prevStartAngle,
                prevStartAngle = prevStartAngle + (360 / (totalValue / slice.value))
             );
+            slice.arc.large = slice.value > (totalValue / 2);
          });
       };
    }])
@@ -95,10 +95,12 @@ angular.module('piechart', [])
          },
          link: function(scope, element, attrs, ctrl) {
             var piechartCtrl = ctrl || scope.$parent.ctrl;
-            var d = 'M{{arc.start.x}},{{arc.start.y}}A{{radius}},{{radius}},0,1,1,{{arc.end.x}},{{arc.end.y}}Z';
+            var d = 'M0,0L{{arc.start.x}},{{arc.start.y}}A{{radius}},{{radius}},1,{{arc.large ? 1 : 0}},1,{{arc.end.x}},{{arc.end.y}}Z';
+            var transform = 'translate({{radius}},{{radius}})';
             var path = createSVGNode('path', element, attrs);
             
             angular.element(path).attr('ng-attr-d', d);
+            angular.element(path).attr('ng-attr-transform', transform);
             element.replaceWith(path);
 
             piechartCtrl.addSlice(scope);
