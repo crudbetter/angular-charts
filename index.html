@@ -1,33 +1,46 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="angularPiechartDemoApp" id="top">
+<html lang="en" ng-app="angularPiechartDemoApp"> 
    <head>
       <meta charset="utf-8">
 
       <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
-      <script src="angular-piechart-0.0.1.js"></script>
+      <script src="angular-piechart-0.0.2.js"></script>
       <script src="assets/app.js"></script>
 
+      <link href="assets/demo.css" rel="stylesheet"/>
       <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet"/>
    </head>
    <body>
-      <header class="navbar navbar-default navbar-fixed-top">
-         <nav>
-            <ul class="nav navbar-nav">
-               <a href="#" role="button" class="navbar-brand">
-                  AngularJS Piechart
-               </a>
-            </ul>
-         </nav>
-      </header>
-
       <div class="container">
          <div class="row">
             <div class="col-md-12">
                <section>
-                  <piechart radius="100">
-                     <piechart-slice value="45"></piechart-slice>
-                     <piechart-slice value="55"></piechart-slice>
-                  </piechart>
+                  <div class="page-header">
+                     <h1>Angular Piechart</h1>
+                  </div>
+                  <div class="row" ng-controller="PiechartDemoCtrl">
+                     <div class="col-md-4">
+                        <piechart radius="100">
+                           <piechart-slice ng-repeat="slice in slices" value="{{slice.value}}" fill="{{slice.colour}}" stroke="black"></piechart-slice>
+                        </piechart>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="row show-grid" ng-repeat="slice in slices">
+                           <input type="text" ng-model="slice.value"></input>
+                        </div>
+                        <div class="row">
+                           <button type="button" class="btn btn-default" ng-click="addSlice()" ng-disabled="slices.length >= 5">Add Slice</button>
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <p>
+                           The <strong>piechart directive</strong> uses a default radius of 10, this can be overridden using the <code>radius</code> attribute.
+                        </p>
+                        <p>
+                           Static and dynamic, via <code>ng-repeat</code>, piechart slices are supported.
+                        </p>
+                     </div>
+                  </div>
                </section>
             </div>
          </div>
