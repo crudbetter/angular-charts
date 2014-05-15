@@ -32,7 +32,7 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-contrib-copy');
    grunt.loadNpmTasks('grunt-contrib-uglify');
 
-   grunt.registerTask('default', ['html2js', 'karma']);
+   grunt.registerTask('default', ['karma']);
    grunt.registerTask('build', ['clean', 'copy', 'uglify']);
 
    return grunt;
