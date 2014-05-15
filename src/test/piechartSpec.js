@@ -4,12 +4,10 @@ describe('Controller: PiechartController', function() {
    var slice2 = { value: 150 };
 
    beforeEach(function() {
-      attrs = { radius: '1' };
-
       module('piechart');
 
       inject(function($controller, $rootScope) {
-         ctrl = $controller('PiechartController', { $scope: $rootScope, $attrs: attrs });
+         ctrl = $controller('PiechartController', { $scope: $rootScope, $attrs: {} });
       });
    });
 
@@ -36,41 +34,14 @@ describe('Controller: PiechartController', function() {
    });
 
    describe('Function: setArcs', function() {
-      var originalConfigRadius;
-
       beforeEach(function() {
          ctrl.addSlice(slice1);
          ctrl.addSlice(slice2);
-         
-         inject(function(piechartConfig) {
-            originalConfigRadius = piechartConfig.radius;
-            piechartConfig.radius = 100;
-         });
       });
 
-      afterEach(function() {
-         inject(function(piechartConfig) {
-            piechartConfig.radius = originalConfigRadius;
-         });
-      });
-
-      it('should set start and end points for each slice in the collection, using radius attribute if defined', function() {
+      it('should set start and end points for each slice in the collection', function() {
          var ninety = { x: 1, y: 0 };
          var oneEighty = { x: 0, y: 1 };
-
-         ctrl.setArcs();
-
-         expect(slice1.arc.start).toEqual(ninety);
-         expect(slice1.arc.end).toEqual(oneEighty);
-         expect(slice2.arc.start).toEqual(oneEighty);
-         expect(slice2.arc.end).toEqual(ninety);
-      });
-
-      it('should set start and end points for each slice in the collection, using piechartConfig if radius attribute not defined', function() {
-         var ninety = { x: 100, y: 0 };
-         var oneEighty = { x: 0, y: 100 };
-
-         delete attrs.radius;
 
          ctrl.setArcs();
 
@@ -108,10 +79,10 @@ describe('Directive: piechartSlice', function() {
       element = paths = undefined;
    });
 
-   it('should create path elements with correct d and transform attributes', function() {
+   it('should create path elements with correct d attributes', function() {
       var html = 
          "<div>" +
-            "<piechart radius='10'>" +
+            "<piechart>" +
                "<piechart-slice value='50'></piechart-slice>" +
                "<piechart-slice value='150'></piechart-slice>" +
             "</piechart-slice>" +
@@ -124,10 +95,8 @@ describe('Directive: piechartSlice', function() {
       var paths = findPaths();
 
       expect(paths.length).toEqual(2);
-      expect(paths[0].getAttribute('d')).toEqual('M0,0L10,0A10,10,1,0,1,0,10Z');
-      expect(paths[1].getAttribute('d')).toEqual('M0,0L0,10A10,10,1,1,1,10,0Z');
-      expect(paths[0].getAttribute('transform')).toEqual('translate(10,10)');
-      expect(paths[1].getAttribute('transform')).toEqual('translate(10,10)');
+      expect(paths[0].getAttribute('d')).toEqual('M0,0L1,0A1,1,1,0,1,0,1Z');
+      expect(paths[1].getAttribute('d')).toEqual('M0,0L0,1A1,1,1,1,1,1,0Z');
    });
 
    describe('combined with ng-repeat', function() {
@@ -160,10 +129,8 @@ describe('Directive: piechartSlice', function() {
          var paths = findPaths();
 
          expect(paths.length).toEqual(2);
-         expect(paths[0].getAttribute('d')).toEqual('M0,0L10,0A10,10,1,0,1,0,10Z');
-         expect(paths[1].getAttribute('d')).toEqual('M0,0L0,10A10,10,1,1,1,10,0Z');
-         expect(paths[0].getAttribute('transform')).toEqual('translate(10,10)');
-         expect(paths[1].getAttribute('transform')).toEqual('translate(10,10)');
+         expect(paths[0].getAttribute('d')).toEqual('M0,0L1,0A1,1,1,0,1,0,1Z');
+         expect(paths[1].getAttribute('d')).toEqual('M0,0L0,1A1,1,1,1,1,1,0Z');
       });
    });
 });

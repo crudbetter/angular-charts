@@ -13,8 +13,8 @@ angular.module('piechart', [])
 
       function getPointOnCircle(angle) {
         return {
-          x: Math.round(radius * Math.cos(angle)),
-          y: Math.round(radius * Math.sin(angle))
+          x: Math.round(1 * Math.cos(angle)),
+          y: Math.round(1 * Math.sin(angle))
         };
       };
 
@@ -42,14 +42,13 @@ angular.module('piechart', [])
       var prevStartAngle = 0;
       var totalValue = 0;
 
-      radius = angular.isDefined($attrs.radius) ? $scope.$eval($attrs.radius) : piechartConfig.radius;
+      $scope.radius = angular.isDefined($attrs.radius) ? $scope.$eval($attrs.radius) : piechartConfig.radius;
 
       angular.forEach(slices, function(slice) {
         totalValue += slice.value;
       });
 
       angular.forEach(slices, function(slice) {
-        slice.radius = radius;
         slice.arc = getArc(
           prevStartAngle,
           prevStartAngle = prevStartAngle + (360 / (totalValue / slice.value))
@@ -64,7 +63,13 @@ angular.module('piechart', [])
       restrict: 'EA',
       replace: true,
       controller: 'PiechartController',
-      template: '<svg ng-transclude></svg>',
+      template: 
+        '<svg ng-attr-height="{{radius * 2 + 10}}" ng-attr-width="{{radius * 2 + 10}}">' +
+          '<g ng-attr-transform="translate({{radius}}, {{radius}}), scale({{radius}})"' +
+            ' ng-attr-stroke-width="{{1 / radius}}"' +
+            ' ng-transclude>' +
+          '</g>' +
+        '</svg>',
       transclude: true,
       scope: {
         radius: '@'
@@ -79,10 +84,7 @@ angular.module('piechart', [])
       replace: true,
       type: 'svg',
       template:
-        '<path ' +
-          'ng-attr-d="M0,0L{{arc.start.x}},{{arc.start.y}}A{{radius}},{{radius}},1,{{arc.large ? 1 : 0}},1,{{arc.end.x}},{{arc.end.y}}Z" ' +
-          'ng-attr-transform="translate({{radius}},{{radius}})">' +
-        '</path>',
+        '<path ng-attr-d="M0,0L{{arc.start.x}},{{arc.start.y}}A1,1,1,{{arc.large ? 1 : 0}},1,{{arc.end.x}},{{arc.end.y}}Z" />',
       scope: {
         value: '@'
       },
