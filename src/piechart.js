@@ -5,7 +5,7 @@ angular.module('piechart', [])
   })
 
   .controller('PiechartController', ['$scope', '$attrs', 'piechartConfig', function($scope, $attrs, piechartConfig) {
-    var slices, radius;
+    var slices;
     var getArc = function(startAngle, endAngle) {
       function convertToRadians(angle) {
         return angle * (Math.PI / 180);
@@ -13,8 +13,8 @@ angular.module('piechart', [])
 
       function getPointOnCircle(angle) {
         return {
-          x: Math.round(1 * Math.cos(angle)),
-          y: Math.round(1 * Math.sin(angle))
+          x: 1 * Math.cos(angle),
+          y: 1 * Math.sin(angle)
         };
       };
 
@@ -25,10 +25,6 @@ angular.module('piechart', [])
     };
 
     this.slices = slices = [];
-
-    this.scope = $scope;
-
-    this.attrs = $attrs;
 
     this.addSlice = function(sliceScope) {
       slices.push(sliceScope);
@@ -51,7 +47,7 @@ angular.module('piechart', [])
       angular.forEach(slices, function(slice) {
         slice.arc = getArc(
           prevStartAngle,
-          prevStartAngle = prevStartAngle + (360 / (totalValue / slice.value))
+          prevStartAngle = (prevStartAngle + (360 / (totalValue / slice.value))) % 360
         );
         slice.arc.large = slice.value > (totalValue / 2);
       });
