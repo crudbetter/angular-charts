@@ -1,4 +1,46 @@
-svg {
-   //padding: 10px;
-   //height: 210px;
+section {
+	padding-top: 30px;
+}
+
+.bs-docs-header {
+    background: transparent url(bg-masthead.gif) repeat fixed;
+    color: #2c2f32;
+    border-top: 1px solid #2c2f32;
+    border-bottom: 1px solid #2c2f32;
+}
+
+.bs-docs-header h1 {
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000; 
+}
+
+.bs-docs-nav .navbar-brand, .bs-docs-nav .navbar-nav>li>a, .bs-docs-nav .navbar-nav>li>a:hover  {
+    color: #2c2f32;
+}
+
+.rainbow .close {
+    float: none;
+    font-size: 13px;
+    font-weight: normal;
+    text-shadow: none;
+    opacity: 1;
+}
+
+.code .nav-tabs {
+	border-bottom: 1px solid #ccc;
+}
+
+.code pre, .code code {
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.code .nav-tabs>li.active>a, .code .nav-tabs>li.active>a:hover, .code .nav-tabs>li.active>a:focus {
+	background-color: #f8f8f8;
+	border: 1px solid #ccc;
+	border-bottom-color: transparent;
 }
