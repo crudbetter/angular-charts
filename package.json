@@ -1,11 +1,11 @@
 {
-  "author": "https://github.com/mjgodfrey83",
-  "name": "angular-piechart",
-  "version": "0.0.3",
-  "homepage": "http://mjgodfrey83.github.io/angular-piechart/",
+  "author": "https://github.com/crudbetter",
+  "name": "angular-charts",
+  "version": "0.0.1",
+  "homepage": "http:/crudbetter.github.io/angular-piechart/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mjgodfrey83/angular-piechart.git"
+    "url": "https://github.com/crudbetter/angular-piechart.git"
   },
   "devDependencies": {
     "grunt": "~0.4.4",
@@ -15,6 +15,7 @@
     "karma-chrome-launcher": "~0.1.2",
     "grunt-contrib-clean": "~0.5.0",
     "grunt-contrib-uglify": "~0.4.0",
-    "grunt-contrib-copy": "~0.5.0"
+    "grunt-contrib-copy": "~0.5.0",
+    "grunt-contrib-concat": "~0.4.0"
   }
 }

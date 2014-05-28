@@ -12,7 +12,7 @@ describe('Controller: PiechartController', function() {
    });
 
    describe('Function: addSlice', function() {
-      it('should add to the colleciton', function() {
+      it('should add to the collection', function() {
          ctrl.addSlice(slice1);
          ctrl.addSlice(slice2);
 
@@ -115,7 +115,7 @@ describe('Directive: piechartSlice', function() {
          expect(findPaths().length).toEqual(0);
       });
 
-      it('should create path elements with correct d and tranform attributes when collection changes', function() {
+      it('should create path elements with correct d ttributes when collection changes', function() {
          element = angular.element(html);
          $compile(element)($rootScope);
          $rootScope.$apply();

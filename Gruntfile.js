@@ -3,7 +3,7 @@ module.exports = function(grunt) {
    grunt.initConfig({
       pkg: grunt.file.readJSON('package.json'),
       dist: 'dist',
-      filename: 'angular-piechart',
+      filename: '<%= pkg.name %>',
       karma: {
          unit: {
             configFile: 'karma.conf.js',
@@ -13,15 +13,18 @@ module.exports = function(grunt) {
       clean: {
          dist: ['<%= dist %>']
       },
-      copy: {
+      concat: {
          dist: {
-            src: ['src/piechart.js'],
+            options: {
+               banner: 'angular.module(\'charts\', [\'piechart\', \'linechart\']);\n\n'
+            },
+            src: ['src/piechart.js', 'src/linechart.js'],
             dest: '<%= dist %>/<%= filename %>-<%= pkg.version %>.js'
          }
       },
       uglify: {
          dist: {
-            src: ['<%= copy.dist.dest %>'],
+            src: ['<%= concat.dist.dest %>'],
             dest: '<%= dist %>/<%= filename %>-<%= pkg.version %>.min.js'
          }
       }
@@ -29,11 +32,11 @@ module.exports = function(grunt) {
 
    grunt.loadNpmTasks('grunt-karma');
    grunt.loadNpmTasks('grunt-contrib-clean');
-   grunt.loadNpmTasks('grunt-contrib-copy');
+   grunt.loadNpmTasks('grunt-contrib-concat');
    grunt.loadNpmTasks('grunt-contrib-uglify');
 
    grunt.registerTask('default', ['karma']);
-   grunt.registerTask('build', ['clean', 'copy', 'uglify']);
+   grunt.registerTask('build', ['clean', 'concat', 'uglify']);
 
    return grunt;
 };
