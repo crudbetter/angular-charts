@@ -13,8 +13,8 @@ angular.module('piechart', [])
 
       function getPointOnCircle(angle) {
         return {
-          x: 1 * Math.cos(angle),
-          y: 1 * Math.sin(angle)
+          x: Math.round(1 * Math.cos(angle)),
+          y: Math.round(1 * Math.sin(angle))
         };
       };
 
