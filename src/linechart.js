@@ -80,7 +80,7 @@ angular.module('linechart', [])
 			restrict: 'EA',
 			require: '^linechart',
 			replace: true,
-			type: 'svg',
+			templateNamespace: 'svg',
 			template:
 				'<polyline ng-attr-points="{{points.join(\' \')}}" />',
 			scope: {

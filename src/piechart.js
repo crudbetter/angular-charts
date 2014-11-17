@@ -78,7 +78,7 @@ angular.module('piechart', [])
       restrict: 'EA',
       require: '^piechart',
       replace: true,
-      type: 'svg',
+      templateNamespace: 'svg',
       template:
         '<path ng-attr-d="M0,0L{{arc.start.x}},{{arc.start.y}}A1,1,1,{{arc.large ? 1 : 0}},1,{{arc.end.x}},{{arc.end.y}}Z" />',
       scope: {
