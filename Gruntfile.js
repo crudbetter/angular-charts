@@ -7,13 +7,13 @@ module.exports = function(grunt) {
       karma: {
          options: {
             configFile: 'karma.conf.js'
-         }
+         },
          unit: {
             autoWatch: true
          },
          travis: {
             singleRun: true,
-            reporters: ['dots']
+            reporters: ['dots'],
             browsers: ['Firefox']
          }
       },
