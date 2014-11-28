@@ -1,6 +1,8 @@
 angular-charts
 ================
 
+[![Build Status](https://secure.travis-ci.org/crudbetter/angular-charts.svg)](http://travis-ci.org/crudbetter/angular-charts)
+
 Native AngularJS SVG chart directives with no other dependencies. Heavily inspired by the AngularJS [bootstrap](https://github.com/angular-ui/bootstrap) directives. The aim is to avoid large secondary downloads alongside AngularJS (such as D3 or HighCharts) and the inevitable integration headaches.
 
 ## Demo
