@@ -5,9 +5,16 @@ module.exports = function(grunt) {
       dist: 'dist',
       filename: '<%= pkg.name %>',
       karma: {
+         options: {
+            configFile: 'karma.conf.js'
+         }
          unit: {
-            configFile: 'karma.conf.js',
             autoWatch: true
+         },
+         travis: {
+            singleRun: true,
+            reporters: ['dots']
+            browsers: ['Firefox']
          }
       },
       clean: {
@@ -35,7 +42,7 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-contrib-concat');
    grunt.loadNpmTasks('grunt-contrib-uglify');
 
-   grunt.registerTask('default', ['karma']);
+   grunt.registerTask('default', ['karma:unit']);
    grunt.registerTask('build', ['clean', 'concat', 'uglify']);
 
    return grunt;
