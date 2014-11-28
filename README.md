@@ -9,7 +9,7 @@ Please visit [http://crudbetter.github.io/angular-charts/](http://crudbetter.git
 
 ## Installation
 
-You can download all versions from the [gh-pages](http://crudbetter.github.io/angular-charts/tree/gh-pages) branch.
+You can download all versions from the [gh-pages](http:/github.com/crudbetter/angular-charts/tree/gh-pages) branch.
 
 Once downloaded simply add dependencies to the AngularJS modules you require.
 
