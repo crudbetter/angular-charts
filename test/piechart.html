@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="piechartTestHarness"> 
+   <head>
+      <meta charset="utf-8">
+
+      <script src="../node_modules/angular/angular.js"></script>
+      <script src="angular-charts.js"></script>
+      <script src="piechart.js"></script>
+      
+      <title>piechart test harness</title>
+  </head>
+  <body>
+    <div ng-controller="TestHarnessCtrl">
+      <piechart radius="100">
+        <piechart-slice ng-repeat="slice in slices" value="{{slice.value}}" fill="{{slice.colour}}" stroke="white"/>
+      </piechart>
+    </div>
+  </body>
+</html>

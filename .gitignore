@@ -7,3 +7,5 @@ npm-debug.log
 node_modules
 dist
 template/*.js
+
+test/angular-charts.js
