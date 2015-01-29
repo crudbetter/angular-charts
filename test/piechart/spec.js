@@ -8,7 +8,7 @@ describe('piechart directive with static slices', function() {
 	    });
 	  });
 	})
-})
+});
 
 describe('piechart directive with dynamic slices', function() {
   it('should render', function() {
