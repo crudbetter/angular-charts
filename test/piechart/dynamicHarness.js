@@ -1,6 +1,6 @@
 var sliceValues = [];
 
-angular.module('piechartTestHarness', ['piechart'])
+angular.module('piechartDynamicHarness', ['piechart'])
    
    .factory('wrapMethod', function() {
       return function(object, method, wrapper) {
