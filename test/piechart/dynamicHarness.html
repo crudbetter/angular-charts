@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="piechartDynamicHarness"> 
+<html lang="en" ng-app="piechartHarness"> 
    <head>
       <meta charset="utf-8">
 
       <script src="../../node_modules/angular/angular.js"></script>
       <script src="../angular-charts.js"></script>
-      <script src="dynamicHarness.js"></script>
+      <script src="harness.js"></script>
       
-      <title>piechart dynamice harness</title>
+      <title>piechart dynamic harness</title>
   </head>
   <body>
-    <div ng-controller="TestHarnessCtrl">
+    <div ng-controller="HarnessCtrl">
       <piechart radius="100">
         <piechart-slice ng-repeat="slice in slices" value="{{slice.value}}" stroke="white"></piechart-slice>
       </piechart>

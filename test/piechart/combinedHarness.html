@@ -7,13 +7,14 @@
       <script src="../angular-charts.js"></script>
       <script src="harness.js"></script>
       
-      <title>piechart static harness</title>
+      <title>piechart dynamic harness</title>
   </head>
   <body>
-    <div>
+    <div ng-controller="HarnessCtrl">
       <piechart radius="100">
-        <piechart-slice value="25" stroke="white"></piechart-slice>
-        <piechart-slice value="75" stroke="white"></piechart-slice>
+        <piechart-slice value="50" stroke="white"></piechart-slice>
+        <piechart-slice value="50" stroke="white"></piechart-slice>
+        <piechart-slice ng-repeat="slice in slices" value="{{slice.value}}" stroke="white"></piechart-slice>
       </piechart>
     </div>
   </body>

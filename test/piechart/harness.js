@@ -1,6 +1,6 @@
 var sliceValues = [];
 
-angular.module('piechartDynamicHarness', ['piechart'])
+angular.module('piechartHarness', ['piechart'])
    
    .factory('wrapMethod', function() {
       return function(object, method, wrapper) {
@@ -20,7 +20,7 @@ angular.module('piechartDynamicHarness', ['piechart'])
       };
    }) 
    
-   .controller('TestHarnessCtrl', function ($scope, wrapMethod, Slice) {
+   .controller('HarnessCtrl', function ($scope, wrapMethod, Slice) {
       $scope.slices = [];
       
       wrapMethod(sliceValues, 'push', function(original, value) {
