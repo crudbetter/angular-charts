@@ -5,7 +5,9 @@
  before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
-  - npm install --quiet -g grunt-cli karma
+  - npm install --quiet -g protractor
+  - webdriver-manager update
+  - webdriver-manager start
   - npm install
 
- script: grunt karma:travis
+ script: grunt e2e
