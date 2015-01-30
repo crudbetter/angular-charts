@@ -32,7 +32,14 @@ module.exports = function(grunt) {
             keepAlive: true,
             noColor: false
          },
-         e2e: {}
+         e2e: {},
+         travis: {
+            options: {
+               args: {
+                  browser: 'Firefox'
+               }
+            }
+         }
       },
       clean: {
          dist: ['<%= dist %>'],
@@ -68,7 +75,7 @@ module.exports = function(grunt) {
 
    grunt.registerTask('default', ['karma:unit']);
    grunt.registerTask('build', ['clean', 'concat', 'uglify']);
-   grunt.registerTask('e2e', ['clean:test', 'concat:test', 'connect:test', 'protractor:e2e']);
+   grunt.registerTask('e2e', ['clean:test', 'concat:test', 'connect:test', 'protractor:travis']);
 
    return grunt;
 };
