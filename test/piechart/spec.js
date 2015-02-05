@@ -2,6 +2,7 @@ var async = require('async');
 
 describe('piechart directive', function() {
   var baseUrl = 'http://localhost:8000/test/piechart/';
+  var harnessUrl = baseUrl + 'harness.html';
   var two_slices_50_50, three_slices_50_50_100;
 
   var getDriverScreenshot = function(url, callback) {
@@ -23,14 +24,14 @@ describe('piechart directive', function() {
   });
 
   it('should render static slices', function() {
-    browser.get('http://localhost:8000/test/piechart/harness.html');
+    browser.get(harnessUrl);
     browser.takeScreenshot().then(function(data) {
       expect(data).toEqual(two_slices_50_50);
     });
   });
 
   it('should render dynamic slices', function() {
-    browser.get('http://localhost:8000/test/piechart/harness.html');
+    browser.get(harnessUrl);
     browser.driver.executeScript('sliceValues.push(100)');
     browser.takeScreenshot().then(function(data) {
       expect(data).toEqual(three_slices_50_50_100);
