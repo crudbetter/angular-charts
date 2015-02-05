@@ -30,7 +30,10 @@ module.exports = function(grunt) {
          options: {
             configFile: 'protractorConf.js',
             keepAlive: true,
-            noColor: false
+            noColor: false,
+            args: {
+               framework: 'jasmine2'
+            }
          },
          e2e: {},
          travis: {
@@ -75,7 +78,7 @@ module.exports = function(grunt) {
 
    grunt.registerTask('default', ['karma:unit']);
    grunt.registerTask('build', ['clean', 'concat', 'uglify']);
-   grunt.registerTask('e2e', ['clean:test', 'concat:test', 'connect:test', 'protractor:travis']);
+   grunt.registerTask('e2e', ['clean:test', 'concat:test', 'connect:test', 'protractor:e2e']);
 
    return grunt;
 };

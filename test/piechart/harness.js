@@ -14,18 +14,12 @@ angular.module('piechartHarness', ['piechart'])
       }
    })
    
-   .factory('Slice', function() {
-      return function Slice(val) {
-         this.value = val;
-      };
-   }) 
-   
-   .controller('HarnessCtrl', function ($scope, wrapMethod, Slice) {
+   .controller('HarnessCtrl', function ($scope, wrapMethod) {
       $scope.slices = [];
       
       wrapMethod(sliceValues, 'push', function(original, value) {
          original(value);
-         $scope.slices.push(new Slice(value));
+         $scope.slices.push({ value: value });
          $scope.$digest();
       });
    });
