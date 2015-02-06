@@ -14,18 +14,12 @@ angular.module('linechartHarness', ['linechart'])
       }
    })
    
-   .factory('Series', function() {
-      return function Series(vals) {
-         this.values = vals;
-      };
-   }) 
-   
-   .controller('HarnessCtrl', function ($scope, wrapMethod, Series) {
+   .controller('HarnessCtrl', function ($scope, wrapMethod) {
       $scope.series = [];
       
       wrapMethod(seriesValues, 'push', function(original, values) {
          original(values);
-         $scope.series.push(new Series(values));
+         $scope.series.push({ values: values });
          $scope.$digest();
       });
    });

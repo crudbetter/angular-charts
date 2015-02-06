@@ -7,13 +7,14 @@
       <script src="../angular-charts.js"></script>
       <script src="harness.js"></script>
       
-      <title>linechart static harness</title>
+      <title>linechart dynamic harness</title>
   </head>
   <body>
-    <div>
+    <div ng-controller="HarnessCtrl">
       <linechart h="100" w="100">
         <linechart-series values="[0, 1, 0]" stroke="black" fill="none"></linechart-series>
         <linechart-series values="[1, 0, 1]" stroke="black" fill="none"></linechart-series>
+        <linechart-series ng-repeat="s in series" values="{{s.values}}" stroke="black" fill="none"></linechart-series>
       </piechart>
     </div>
   </body>
