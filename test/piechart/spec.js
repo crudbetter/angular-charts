@@ -31,7 +31,7 @@ describe('piechart', function() {
   });
 
   beforeEach(function() {
-    browser.driver.executeScript('sliceValues.length = 0');
+    browser.executeScript('sliceValues.length = 0');
   });
 
   it('should render static slices', function() {
@@ -41,17 +41,17 @@ describe('piechart', function() {
   });
 
   it('should render dynamic slices', function() {
-    browser.driver.executeScript('sliceValues.push(100)');
+    browser.executeScript('sliceValues.push(100)');
     browser.takeScreenshot().then(function(data) {
       expect(data).toEqual(three_slices_50_50_100);
     });
   });
 
   it('should animate slice focus', function () {
-    browser.driver.executeScript('sliceValues.push(100)');
+    browser.executeScript('sliceValues.push(100)');
     element.all(by.repeater('slice in slices')).first().click();
     browser.sleep(250);
-    browser.driver.takeScreenshot().then(function(data) {
+    browser.takeScreenshot().then(function(data) {
       expect(data).toEqual(three_slices_50_popped_50_100);
     });
   });
