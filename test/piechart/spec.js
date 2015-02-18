@@ -3,7 +3,7 @@ var async = require('async');
 describe('piechart', function() {
   var baseUrl = 'http://localhost:8000/test/piechart/';
   var harnessUrl = baseUrl + 'harness.html';
-  var two_slices_50_50, three_slices_50_50_100, three_slices_50_popped_50_100;
+  var two_slices_50_50, three_slices_50_50_100, three_slices_50_50_100_popped;
 
   var getDriverScreenshot = function(url, callback) {
     browser.driver.get(url);
@@ -16,7 +16,7 @@ describe('piechart', function() {
     async.series([
       async.apply(getDriverScreenshot, baseUrl + 'expected/two_slices_50_50.html'),
       async.apply(getDriverScreenshot, baseUrl + 'expected/three_slices_50_50_100.html'),
-      async.apply(getDriverScreenshot, baseUrl + 'expected/three_slices_50_popped_50_100.html'),
+      async.apply(getDriverScreenshot, baseUrl + 'expected/three_slices_50_50_100_popped.html'),
       function(callback) {
         browser.get(harnessUrl);
         browser.waitForAngular();
@@ -25,7 +25,7 @@ describe('piechart', function() {
     ], function(err, results) {
       two_slices_50_50 = results[0];
       three_slices_50_50_100 = results[1];
-      three_slices_50_popped_50_100 = results[2];
+      three_slices_50_50_100_popped = results[2];
       done();
     });
   });
@@ -52,7 +52,7 @@ describe('piechart', function() {
     element.all(by.repeater('slice in slices')).first().click();
     browser.sleep(250);
     browser.takeScreenshot().then(function(data) {
-      expect(data).toEqual(three_slices_50_popped_50_100);
+      expect(data).toEqual(three_slices_50_50_100_popped);
     });
   });
 });
