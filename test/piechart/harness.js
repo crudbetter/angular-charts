@@ -2,24 +2,18 @@ var sliceValues = [];
 
 angular.module('piechartHarness', ['piechart'])
    
-   .factory('wrapMethod', function() {
-      return function(object, method, wrapper) {
-         var fn = object[method];
-
-         return object[method] = function() {
-            return wrapper.apply(this, [fn.bind(this)].concat(
-               Array.prototype.slice.call(arguments))
-            );
-         };
-      }
-   })
-   
-   .controller('HarnessCtrl', function ($scope, wrapMethod) {
+   .controller('HarnessCtrl', function ($scope) {
       $scope.slices = [];
-      
-      wrapMethod(sliceValues, 'push', function(original, value) {
-         original(value);
-         $scope.slices.push({ value: value });
+
+      Array.observe(sliceValues, function(changes) {
+         angular.forEach(changes, function(change) {
+            var valuesToAdd = change.object.slice(change.index).map(function(value) {
+               return { value: value };
+            });
+            var args = [change.index, change.removed.length].concat(valuesToAdd);
+            Array.prototype.splice.apply($scope.slices, args);
+         });
+
          $scope.$digest();
       });
    });

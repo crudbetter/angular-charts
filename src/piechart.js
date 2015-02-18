@@ -30,11 +30,18 @@ angular.module('piechart', [])
     this.slices = slices = [];
 
     this.addSlice = function(sliceScope) {
+      var that = this;
+
       slices.push(sliceScope);
+      sliceScope.$on('$destroy', function() {
+        that.removeSlice(sliceScope);
+      })
+
     };
 
     this.removeSlice = function(sliceScope) {
       slices.splice(slices.indexOf(sliceScope), 1);
+      this.setArcs();
     };
 
     this.setArcs = function() {
