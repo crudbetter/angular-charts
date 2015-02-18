@@ -1,0 +1,14 @@
+<path ng-attr-d="M0,0l{{arc.start.x}},{{arc.start.y}}a1,1,1,{{arc.large ? 1 : 0}},1,{{arc.end.x - arc.start.x}},{{arc.end.y - arc.start.y}}Z">
+	<animate 
+		attributeName="d" 
+		ng-attr-to="M{{arc.mid.x}},{{arc.mid.y}}l{{arc.start.x}},{{arc.start.y}}a1,1,1,{{arc.large ? 1 : 0}},1,{{arc.end.x - arc.start.x}},{{arc.end.y - arc.start.y}}Z" 
+		dur="0.25" 
+		begin="mouseover"
+		fill="freeze" />
+	<animate
+		attributeName="d"
+		ng-attr-to="M0,0l{{arc.start.x}},{{arc.start.y}}a1,1,1,{{arc.large ? 1 : 0}},1,{{arc.end.x - arc.start.x}},{{arc.end.y - arc.start.y}}Z"
+		dur="0.25"
+		begin="mouseout"
+		fill="freeze" />
+</path>

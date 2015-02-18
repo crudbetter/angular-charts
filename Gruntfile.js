@@ -77,7 +77,8 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-contrib-connect');
 
    grunt.registerTask('default', ['karma:unit']);
-   grunt.registerTask('build', ['clean', 'concat', 'uglify']);
+   grunt.registerTask('build', ['clean:dist', 'concat:dist', 'uglify:dist']);
+   grunt.registerTask('harness', ['clean:test', 'concat:test', 'connect:test:keepalive']);
    grunt.registerTask('e2e', ['clean:test', 'concat:test', 'connect:test', 'protractor:e2e']);
 
    return grunt;

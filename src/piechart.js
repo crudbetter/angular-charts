@@ -18,8 +18,11 @@ angular.module('piechart', [])
         };
       };
 
+      var midAngle = startAngle + (((endAngle || 360) - startAngle) / 2);
+
       return {
         start: getPointOnCircle(convertToRadians(startAngle)),
+        mid: getPointOnCircle(convertToRadians(midAngle)),
         end: getPointOnCircle(convertToRadians(endAngle))
       };
     };
@@ -59,13 +62,7 @@ angular.module('piechart', [])
       restrict: 'EA',
       replace: true,
       controller: 'PiechartController',
-      template: 
-        '<svg ng-attr-height="{{radius * 2 + 10}}" ng-attr-width="{{radius * 2 + 10}}">' +
-          '<g ng-attr-transform="translate({{radius}}, {{radius}}), scale({{radius}})"' +
-            ' ng-attr-stroke-width="{{1 / radius}}"' +
-            ' ng-transclude>' +
-          '</g>' +
-        '</svg>',
+      templateUrl: 'template/piechart.html',
       transclude: true,
       scope: {
         radius: '@'
@@ -79,8 +76,7 @@ angular.module('piechart', [])
       require: '^piechart',
       replace: true,
       templateNamespace: 'svg',
-      template:
-        '<path ng-attr-d="M0,0L{{arc.start.x}},{{arc.start.y}}A1,1,1,{{arc.large ? 1 : 0}},1,{{arc.end.x}},{{arc.end.y}}Z" />',
+      templateUrl: 'template/piechart-slice.html',
       scope: {
         value: '@'
       },
