@@ -6,6 +6,13 @@ module.exports = function(grunt) {
       test: 'test',
       filename: '<%= pkg.name %>',
       connect: {
+         harness: {
+            options: {
+               port: 8000,
+               hostname: 'localhost',
+               livereload: true
+            }
+         },
          test: {
             options: {
                port: 8000,
@@ -66,6 +73,15 @@ module.exports = function(grunt) {
             src: ['<%= concat.dist.dest %>'],
             dest: '<%= dist %>/<%= filename %>-<%= pkg.version %>.min.js'
          }
+      },
+      watch: {
+         harness: {
+            files: ['src/*.js'],
+            tasks: ['clean:test', 'concat:test'],
+            options: {
+               livereload: true
+            }
+         }
       }
    });
 
@@ -73,12 +89,13 @@ module.exports = function(grunt) {
    grunt.loadNpmTasks('grunt-contrib-clean');
    grunt.loadNpmTasks('grunt-contrib-concat');
    grunt.loadNpmTasks('grunt-contrib-uglify');
+   grunt.loadNpmTasks('grunt-contrib-watch');
    grunt.loadNpmTasks('grunt-protractor-runner');
    grunt.loadNpmTasks('grunt-contrib-connect');
 
    grunt.registerTask('default', ['karma:unit']);
    grunt.registerTask('build', ['clean:dist', 'concat:dist', 'uglify:dist']);
-   grunt.registerTask('harness', ['clean:test', 'concat:test', 'connect:test:keepalive']);
+   grunt.registerTask('harness', ['clean:test', 'concat:test', 'connect:harness', 'watch:harness']);
    grunt.registerTask('e2e', ['clean:test', 'concat:test', 'connect:test', 'protractor:e2e']);
 
    return grunt;
