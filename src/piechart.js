@@ -95,6 +95,14 @@ angular.module('piechart', [])
           scope.value = parseInt(value, 10);
           ctrl.setArcs();
         });
+
+        element.on('mouseenter', function() { 
+          element.css('-webkit-transform', 'translate(' + (0.1 * scope.arc.mid.x) + 'px, ' + (0.1 * scope.arc.mid.y) + 'px)');
+        });
+
+        element.on('mouseleave', function() {
+          element.css('-webkit-transform', 'translate(0px, 0px)');
+        })
       }
     };
   });

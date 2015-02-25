@@ -1,0 +1,22 @@
+path {
+	fill: black;
+	/*transform: translate(0, 0);
+ 	transition: all 2s;*/
+ 	-webkit-transform: translate(0px, 0px);
+ 	-webkit-transition: all 0.5s;	
+	}
+
+/*	path:hover {
+-webkit-animation: popout 2s;
+-webkit-transform: translate(0.1px, 0.1px);
+
+}*/
+
+/*@-webkit-keyframes popout {
+	50% {
+		-webkit-transform: translate(0.1px, 0.1px);
+	}
+	100% {
+		-webkit-transform: translateX(2px);
+	}
+}*/
