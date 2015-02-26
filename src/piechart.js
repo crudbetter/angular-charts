@@ -96,13 +96,15 @@ angular.module('piechart', [])
           ctrl.setArcs();
         });
 
-        element.on('mouseenter', function() { 
-          element.css('-webkit-transform', 'translate(' + (0.1 * scope.arc.mid.x) + 'px, ' + (0.1 * scope.arc.mid.y) + 'px)');
+        element.on('mouseenter', function() {
+          element.addClass('mouseover'); 
+          element.css('-webkit-transform', 'translate(' + (2.5 * scope.arc.mid.x) + '%, ' + (2.5 * scope.arc.mid.y) + '%)');
         });
 
         element.on('mouseleave', function() {
-          element.css('-webkit-transform', 'translate(0px, 0px)');
-        })
+          element.removeClass('mouseover');
+          element.css('-webkit-transform', 'translate(0%, 0%)');
+        });
       }
     };
   });
