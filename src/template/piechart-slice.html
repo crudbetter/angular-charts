@@ -1,14 +1,15 @@
-<path ng-attr-d="M0,0l{{arc.start.x}},{{arc.start.y}}a1,1,1,{{arc.large ? 1 : 0}},1,{{arc.end.x - arc.start.x}},{{arc.end.y - arc.start.y}}Z">
-	<animate 
-		attributeName="d" 
-		ng-attr-to="M{{arc.mid.x}},{{arc.mid.y}}l{{arc.start.x}},{{arc.start.y}}a1,1,1,{{arc.large ? 1 : 0}},1,{{arc.end.x - arc.start.x}},{{arc.end.y - arc.start.y}}Z" 
-		dur="0.25" 
-		begin="mouseover"
-		fill="freeze" />
-	<animate
-		attributeName="d"
-		ng-attr-to="M0,0l{{arc.start.x}},{{arc.start.y}}a1,1,1,{{arc.large ? 1 : 0}},1,{{arc.end.x - arc.start.x}},{{arc.end.y - arc.start.y}}Z"
-		dur="0.25"
-		begin="mouseout"
-		fill="freeze" />
+<path ng-attr-d="M0,0L{{arc.start.x}},{{arc.start.y}}A1,1,1,0,1,{{arc.start.x}},{{arc.start.y}}Z">
+  <animate ng-repeat="kf in arc.keyframes"
+    attributeName="d"
+    ng-attr-to="M0,0L{{arc.start.x}},{{arc.start.y}}A1,1,1,0,1,{{kf.end.x}},{{kf.end.y}}Z"
+    fill="freeze"
+    ng-attr-dur="{{1 / arc.keyframes.length}}s"
+    ng-attr-id="{{$index}}"
+    ng-attr-begin="{{$index - 1}}.end" />
+  <animate
+    attributeName="d"
+    ng-attr-to="M0,0L{{arc.start.x}},{{arc.start.y}}A1,1,1,{{arc.large ? 1 : 0}},1,{{arc.end.x}},{{arc.end.y}}Z"
+    fill="freeze"
+    ng-attr-dur="{{1 / arc.keyframes.length}}s"
+    ng-attr-begin="{{arc.keyframes.length}}.end" />
 </path>
