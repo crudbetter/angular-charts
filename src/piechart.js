@@ -1,10 +1,16 @@
+document.addEventListener("DOMContentLoaded", function(event) {
+  console.log(Date.now());
+});
+
 angular.module('piechart', [])
 
   .constant('piechartConfig', {
     radius: 10
   })
 
-  .controller('PiechartController', ['$scope', '$attrs', 'piechartConfig', function($scope, $attrs, piechartConfig) {
+  .constant('loadedAt', Date.now())
+
+  .controller('PiechartController', ['$scope', '$attrs', 'piechartConfig', 'loadedAt', function($scope, $attrs, piechartConfig, loadedAt) {
     var slices;
     var keyframes = [];
     var getArc = function(startAngle, endAngle) {
@@ -32,7 +38,7 @@ angular.module('piechart', [])
       keyframes.push(getArc(degrees - 1, degrees));
     }
 
-    this.slices = slices = [];
+    $scope.slices = slices = [];
 
     this.addSlice = function(sliceScope) {
       var that = this;
@@ -52,6 +58,7 @@ angular.module('piechart', [])
     this.setArcs = function() {
       var prevStartAngle = 0;
       var totalValue = 0;
+      var animateAfter = (Date.now() - loadedAt) / 1000;
 
       $scope.radius = angular.isDefined($attrs.radius) ? $scope.$eval($attrs.radius) : piechartConfig.radius;
 
@@ -65,7 +72,11 @@ angular.module('piechart', [])
         
         slice.arc = getArc(startAngle, endAngle);
         slice.arc.large = slice.value > (totalValue / 2);
-        slice.arc.keyframes = keyframes.slice(startAngle + 1, endAngle ? endAngle : 360);
+        
+        slice.animation = {
+          keyframes: keyframes.slice(startAngle + 1, endAngle ? endAngle : 360),
+          animateAfter: animateAfter
+        };
 
         prevStartAngle = endAngle;
       });
@@ -81,6 +92,11 @@ angular.module('piechart', [])
       transclude: true,
       scope: {
         radius: '@'
+      },
+      link: function(scope, element, attrs, ctrl) {
+        scope.$watchCollection('slices', function(prevSlices, newSlices) {
+          ctrl.setArcs();
+        });
       }
     };
   })
@@ -93,15 +109,15 @@ angular.module('piechart', [])
       templateNamespace: 'svg',
       templateUrl: 'template/piechart-slice.html',
       scope: {
-        value: '@'
+        value: '='
       },
       link: function(scope, element, attrs, ctrl) {
-        scope.value = parseInt(scope.value, 10);
         ctrl.addSlice(scope);
 
-        attrs.$observe('value', function(value) {
-          scope.value = parseInt(value, 10);
-          ctrl.setArcs();
+        scope.$watch('value', function(prevVal, newVal) {
+          if (newVal != prevVal) {
+            ctrl.setArcs();
+          }
         });
 
         element.on('mouseenter', function() {

@@ -1,15 +1,15 @@
 <path ng-attr-d="M0,0L{{arc.start.x}},{{arc.start.y}}A1,1,1,0,1,{{arc.start.x}},{{arc.start.y}}Z">
-  <animate ng-repeat="kf in arc.keyframes"
+  <animate ng-repeat="frame in animation.keyframes"
     attributeName="d"
-    ng-attr-to="M0,0L{{arc.start.x}},{{arc.start.y}}A1,1,1,0,1,{{kf.end.x}},{{kf.end.y}}Z"
+    ng-attr-to="M0,0L{{arc.start.x}},{{arc.start.y}}A1,1,1,0,1,{{frame.end.x}},{{frame.end.y}}Z"
     fill="freeze"
-    ng-attr-dur="{{1 / arc.keyframes.length}}s"
+    ng-attr-dur="{{1 / animation.keyframes.length}}s"
     ng-attr-id="{{$index}}"
-    ng-attr-begin="{{$index - 1}}.end" />
+    ng-attr-begin="{{$index ? $index - 1 + '.end' : animateAfter + 's'}}" />
   <animate
     attributeName="d"
     ng-attr-to="M0,0L{{arc.start.x}},{{arc.start.y}}A1,1,1,{{arc.large ? 1 : 0}},1,{{arc.end.x}},{{arc.end.y}}Z"
     fill="freeze"
-    ng-attr-dur="{{1 / arc.keyframes.length}}s"
-    ng-attr-begin="{{arc.keyframes.length}}.end" />
+    ng-attr-dur="{{1 / animation.keyframes.length}}s"
+    ng-attr-begin="{{animation.keyframes.length}}.end" />
 </path>
