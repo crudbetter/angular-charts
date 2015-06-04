@@ -1,7 +1,3 @@
-document.addEventListener("DOMContentLoaded", function(event) {
-  console.log(Date.now());
-});
-
 angular.module('piechart', [])
 
   .constant('piechartConfig', {
@@ -66,7 +62,7 @@ angular.module('piechart', [])
         totalValue += slice.value;
       });
 
-      angular.forEach(slices, function(slice) {
+      angular.forEach(slices, function(slice, index) {
         var startAngle = prevStartAngle;
         var endAngle = (startAngle + (360 / (totalValue / slice.value))) % 360;
         
@@ -75,7 +71,7 @@ angular.module('piechart', [])
         
         slice.animation = {
           keyframes: keyframes.slice(startAngle + 1, endAngle ? endAngle : 360),
-          animateAfter: animateAfter
+          animateAfter: animateAfter + (index * 0.5)
         };
 
         prevStartAngle = endAngle;

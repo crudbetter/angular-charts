@@ -1,2 +1,15 @@
-<path ng-attr-d="M0,0l{{arc.start.x}},{{arc.start.y}}a1,1,1,{{arc.large ? 1 : 0}},1,{{arc.end.x - arc.start.x}},{{arc.end.y - arc.start.y}}Z">
+<path ng-init="sliceId = $id">
+  <animate ng-repeat="frame in animation.keyframes"
+    attributeName="d"
+    ng-attr-to="M0,0L{{arc.start.x}},{{arc.start.y}}A1,1,1,0,1,{{frame.end.x}},{{frame.end.y}}Z"
+    fill="freeze"
+    ng-attr-dur="{{0.5 / animation.keyframes.length}}s"
+    ng-attr-id="{{sliceId + 'anim' + $index}}"
+    begin="{{$index ? sliceId + 'anim' + ($index - 1) + '.end' : animation.animateAfter + 's'}}" />
+  <animate
+    attributeName="d"
+    ng-attr-to="M0,0L{{arc.start.x}},{{arc.start.y}}A1,1,1,{{arc.large ? 1 : 0}},1,{{arc.end.x}},{{arc.end.y}}Z"
+    fill="freeze"
+    ng-attr-dur="{{0.5 / animation.keyframes.length}}s"
+    begin="{{sliceId + 'anim' + (animation.keyframes.length - 1) + '.end'}}" />
 </path>
